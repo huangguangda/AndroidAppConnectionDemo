@@ -5,4 +5,9 @@ package cn.edu.gdmec.android.androidappconnectiondemo.liereader.News.Model;
  */
 
 public interface INewsModel {
+    void loadNews(String hostType,
+                  int startPage,
+                  String id,
+                  IOnLoadListener iOnLoadListener);
+
 }

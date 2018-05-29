@@ -4,11 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_news"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="top"
-        android:textSize="100dp" />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl_news"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_news"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="top"
+            android:textSize="20sp" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

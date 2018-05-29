@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFragmentList.add(new FgNewsFragment());
         mFragmentList.add(new FgMovieFragment());
         mFragmentList.add(new FgVideoFragment());
+
         MyFragmentAdapter adapter = new MyFragmentAdapter(getSupportFragmentManager(),
                 mFragmentList);
         vp_content.setAdapter(adapter);
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         vp_content.addOnPageChangeListener(this);
 
         setSupportActionBar(toolbars);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null){
             actionBar.setDisplayShowTitleEnabled(false);
