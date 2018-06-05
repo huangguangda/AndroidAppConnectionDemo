@@ -23,6 +23,8 @@ public class FgMovieFragment extends Fragment implements IMoviesView {
     private SwipeRefreshLayout srl_movie;
     private RecyclerView rv_movie_on;
     private ItemMovieOnAdapter movieOnAdapter;
+    private ItemMovieTop250Adapter movieTop250Adapter;
+    private RecyclerView rv_movie_top250;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,23 +37,39 @@ public class FgMovieFragment extends Fragment implements IMoviesView {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         moviePresenter = new MoviesPresenter(this);
+        srl_movie = view.findViewById(R.id.srl_movie);
         rv_movie_on = view.findViewById(R.id.rv_movie_on);
+        rv_movie_top250=view.findViewById(R.id.rv_movie_top250);
         movieOnAdapter = new ItemMovieOnAdapter(getActivity());
+        movieTop250Adapter = new ItemMovieTop250Adapter(getActivity());
         srl_movie = view.findViewById(R.id.srl_movie);
         srl_movie.setColorSchemeColors(Color.parseColor("#ffce3d3a"));
+        moviePresenter.loadMovie("in_theaters");
+        moviePresenter.loadMovie("top250");
         srl_movie.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 moviePresenter.loadMovie("in_theaters");
+                moviePresenter.loadMovie("top250");
             }
         });
     }
 
     @Override
     public void showMovie(MovieBean movieBean) {
-        movieOnAdapter.setData(movieBean.getSubjects());
-        rv_movie_on.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rv_movie_on.setAdapter(movieOnAdapter);
+
+        if (movieBean.getTotal()==250){
+            movieTop250Adapter.setData(movieBean.getSubjects());
+            rv_movie_top250.setLayoutManager(new LinearLayoutManager(getActivity(),
+                    LinearLayoutManager.HORIZONTAL,false));
+            rv_movie_top250.setHorizontalScrollBarEnabled(true);
+            rv_movie_top250.setAdapter(movieTop250Adapter);
+        }else {
+            movieOnAdapter.setData(movieBean.getSubjects());
+            rv_movie_on.setLayoutManager(new LinearLayoutManager(getActivity()));
+            rv_movie_on.setAdapter(movieOnAdapter);
+        }
+
     }
 
     @Override
