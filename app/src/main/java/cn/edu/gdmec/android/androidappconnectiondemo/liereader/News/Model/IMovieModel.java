@@ -5,5 +5,6 @@ package cn.edu.gdmec.android.androidappconnectiondemo.liereader.News.Model;
  */
 
 public interface IMovieModel {
+    //String hostType,
     void loadMovies(String hostType,String type, IOnLoadListener iOnLoadListener);
 }

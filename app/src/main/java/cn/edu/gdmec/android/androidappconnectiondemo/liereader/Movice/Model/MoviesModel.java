@@ -1,4 +1,4 @@
-package cn.edu.gdmec.android.androidappconnectiondemo.liereader.News.Model;
+package cn.edu.gdmec.android.androidappconnectiondemo.liereader.Movice.Model;
 
 import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Bean.MovieBean;
 import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Http.Api;
@@ -7,12 +7,12 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MovieModel implements IMovieModel {
+public class MoviesModel implements IMoviesModel {
+
     @Override
-    //final String hostType,
-    public void loadMovies(final String hostType,final String type, final IOnLoadListener iOnLoadListener) {
+    public void loadMovie(final String type, final IOnLoadListener iOnLoadListener) {
         RetrofitHelper retrofitHelper = new RetrofitHelper(Api.MOVIES_HOST);
-        retrofitHelper.getMovies(hostType,type)
+        retrofitHelper.getMovies(type)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<MovieBean>() {
@@ -23,12 +23,12 @@ public class MovieModel implements IMovieModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        iOnLoadListener.fail(e.getMessage());
+                        iOnLoadListener.fail(e);
                     }
 
                     @Override
                     public void onNext(MovieBean movieBean) {
-                        iOnLoadListener.successMov(movieBean);
+                        iOnLoadListener.success(movieBean);
                     }
                 });
     }

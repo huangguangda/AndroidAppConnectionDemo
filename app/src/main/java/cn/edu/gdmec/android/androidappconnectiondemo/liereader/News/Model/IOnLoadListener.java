@@ -9,6 +9,8 @@ import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Bean.NewsBean;
 
 public interface IOnLoadListener {
         void success(NewsBean newsBean);
-        void successMov(MovieBean moviesBean);
+        //void successMov(MovieBean moviesBean);
         void fail(String error);
+
+    void successMov(MovieBean movieBean);
 }
