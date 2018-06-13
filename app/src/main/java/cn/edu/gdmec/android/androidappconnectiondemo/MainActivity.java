@@ -8,17 +8,27 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Bean.WeatherBean;
+import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Http.Api;
+import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Http.RetrofitHelper;
 import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Movice.FgMovieFragment;
 import cn.edu.gdmec.android.androidappconnectiondemo.liereader.News.FgNewsFragment;
 import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Video.FgVideoFragment;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         ViewPager.OnPageChangeListener{
+    Integer[] city={101280101,101280102,101280103,101280104,101280105, 101280201,101280202,101280203,101280204,101280205,101280206, 101280207,101280208,101280501};
     private View view_status;
     private ImageView iv_title_news;
     private ImageView iv_title_movie;
@@ -35,6 +45,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         initView();
         initContentFragment();
+        final RetrofitHelper retrofitHelper = new RetrofitHelper(Api.WEATHER_HOST);
+        Observable.from(city)
+                .flatMap(new Func1<Integer, Observable<WeatherBean>>() {
+                    @Override
+                    public Observable<WeatherBean> call(Integer integer) {
+                        return retrofitHelper.getWeather(integer);
+                    }
+                })
+
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<WeatherBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                       Log.i("oooooon:",e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(WeatherBean weatherBean) {
+                        Log.i("onNext:",weatherBean.getData().getCity()+":"+weatherBean.getData().getGanmao());
+                    }
+                });
     }
 
     private void initContentFragment() {

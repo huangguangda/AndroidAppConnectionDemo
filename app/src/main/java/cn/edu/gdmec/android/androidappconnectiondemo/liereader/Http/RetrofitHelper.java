@@ -1,11 +1,14 @@
 package cn.edu.gdmec.android.androidappconnectiondemo.liereader.Http;
 
+import android.content.Intent;
+
 import java.util.concurrent.TimeUnit;
 
 import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Bean.MovieBean;
 import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Bean.NewsBean;
 import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Bean.TodayBean;
 import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Bean.VideoUrlBean;
+import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Bean.WeatherBean;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -57,4 +60,9 @@ public class RetrofitHelper {
     public Observable<VideoUrlBean> getVideoUrl(String api){
         return retrofitService.getVideoUrl(api);
     }
+    //
+    public Observable<WeatherBean> getWeather(int citykey){
+        return  retrofitService.getWeather(citykey);
+    }
+
 }

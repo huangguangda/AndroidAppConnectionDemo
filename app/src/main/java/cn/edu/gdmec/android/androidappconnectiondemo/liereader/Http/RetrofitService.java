@@ -4,6 +4,7 @@ import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Bean.MovieBean;
 import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Bean.NewsBean;
 import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Bean.TodayBean;
 import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Bean.VideoUrlBean;
+import cn.edu.gdmec.android.androidappconnectiondemo.liereader.Bean.WeatherBean;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -23,9 +24,12 @@ public interface RetrofitService {
 
     @GET ("v2/movie/{type}")
     Observable<MovieBean> getMovies(@Path("type") String type);
-
+//http://is.snssdk.com/api/news/feed/v51/?category=video
     @GET("news/feed/v51/")
     Observable<TodayBean> getToday(@Query("category") String category);
+//http://wthrcdn.etouch.cn/weather_mini?citykey=101010100
+    @GET("weather_mini")
+    Observable<WeatherBean> getWeather(@Query("citykey") int citykey);
 
     @GET
     Observable<VideoUrlBean> getVideoUrl(@Url String url);
